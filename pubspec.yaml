@@ -1,41 +1,27 @@
-name: senai_patrimonio
-description: "Gestão Local de Patrimônio."
-publish_to: 'ce206_antonio_devisate'
+name: Build iOS IPA
 
-version: 1.0.0+1
+on:
+  workflow_dispatch:
 
-environment:
-  sdk: ^3.12.2
+jobs:
+  build-ios:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
 
-dependencies:
-  flutter:
-    sdk: flutter
-  provider: ^6.1.2
-  sqflite: ^2.3.3
-  path: ^1.9.0
-  image_picker: ^1.0.7
-  pdf: ^3.11.1
-  printing: ^5.13.2
-  http: ^1.6.0
-  web_socket_channel: ^3.0.1
-  cupertino_icons: ^1.0.8
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.50.0'
+          channel: 'stable'
 
-dev_dependencies:
-  flutter_test:
-    sdk: flutter
-  flutter_lints: ^6.0.0
-  flutter_launcher_icons: ^0.13.1
+      - name: Instalar dependências
+        run: flutter pub get
 
-# Configuração para gerar o ícone do app no celular
-flutter_launcher_icons:
-  android: "launcher_icon"
-  ios: true
-  image_path: "assets/icone_senai.png"
-  min_sdk_android: 21
+      - name: Gerar IPA sem assinatura
+        run: flutter build ipa --no-codesign
 
-flutter:
-  uses-material-design: true
-
-  # Lendo a pasta de imagens inteira
-  assets:
-    - assets/
+      - name: Upload do IPA
+        uses: actions/upload-artifact@v4
+        with:
+          name: senai_patrimonio-ipa
+          path: build/ios/ipa/*.ipa
