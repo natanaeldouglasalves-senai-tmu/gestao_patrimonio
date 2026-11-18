@@ -1,0 +1,41 @@
+name: senai_patrimonio
+description: "Gestão Local de Patrimônio."
+publish_to: 'ce206_antonio_devisate'
+
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.12.2
+
+dependencies:
+  flutter:
+    sdk: flutter
+  provider: ^6.1.2
+  sqflite: ^2.3.3
+  path: ^1.9.0
+  image_picker: ^1.0.7
+  pdf: ^3.11.1
+  printing: ^5.13.2
+  http: ^1.6.0
+  web_socket_channel: ^3.0.1
+  cupertino_icons: ^1.0.8
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^6.0.0
+  flutter_launcher_icons: ^0.13.1
+
+# Configuração para gerar o ícone do app no celular
+flutter_launcher_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/icone_senai.png"
+  min_sdk_android: 21
+
+flutter:
+  uses-material-design: true
+
+  # Lendo a pasta de imagens inteira
+  assets:
+    - assets/
